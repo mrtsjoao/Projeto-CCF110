@@ -4,3 +4,4 @@ O algoritimo desse sistema terá as seguintes funções:
 - Horários de ida e volta das vans.
 - Ordem de entrega dos alunos.
 - Tempo médio da chegada ao destino.
+- Distância até o destino.
