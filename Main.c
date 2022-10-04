@@ -1,39 +1,57 @@
 #include <stdio.h>
+#include <stdlib.h>
+
 
 int main(){
-int countTotal, nAlunosTotal, TipoVan, Vaga_Van15 = 15, Vaga_Van12 = 15, Vaga_Van17 = 15;
+  int horario, nVans[3], nVagas[3], cont;
 
-printf()
+  //DEFINIMOS QUE CADA VAN POSSUI 15 VAGAS
+  for (int i = 0; i < 3; i++)
+  {
+    printf("Digite a quantidade de vans: \n");
+    scanf("%d", &nVans[i]);
+    nVagas[i]  = nVans[i] * 15;
+    cont += nVagas[i];
+  }
+  for (int i = 0; i < cont; i++)
+  {
+    printf("Digite o horário de saída \n");
+    printf("Horários disponíveis: 12, 15 e 17 \n");
+    scanf("%d",&horario);
+    switch (horario){
+    case 12:
+      if(nVagas[0] <1 ){
+        printf("Vagas esgotadas!");
+      }
+      else{
+        nVagas[0]--;
+        printf("Restam %d alunos para a van de 12 horas\n", nVagas[0]);
+      }
+      break;
+    case 15:
+      if(nVagas[1] <1 ){
+        printf("Vagas esgotadas!");
+      }
+      else{
+        nVagas[1]--;
+        printf("Restam %d alunos para a van de 15 horas\n", nVagas[1]);
+      }
+      break;
+    case 17:
+      if(nVagas[2] <1 ){
+       printf("Vagas esgotadas!");
+      }
+      else{
+        nVagas[2]--;
+        printf("Restam %d alunos para a van de 17 horas\n", nVagas[2]);
+      }
+      break;
+    default:
+      printf("Horário indisponivel\n");
+      break;
+    } 
+  } 
+    
+    return 0;
 
-
-
-
-
-
-//Preechimento de vaga nas vans
-printf("Quantos alunos serão adicionados?: ");
-scanf("%d", &nAlunosTotal);
-countTotal = nAlunosTotal;
-for(int i = 1; i <= nAlunosTotal; i++){
-    printf("Escolha um Horario: (0) Meio dia // (1) Três horas // (2) Cinco horas\n");
-    scanf("%d",&TipoVan);
-    if(TipoVan == 0){
-        Vaga_Van12 = Vaga_Van12 - 1;
-    }
-    else if(TipoVan == 1){
-        Vaga_Van15 = Vaga_Van15 - 1;
-    }
-    else if(TipoVan == 2){
-        Vaga_Van17 = Vaga_Van17 - 1;
-    }
-
-    countTotal--;
-
-    printf("Faltam %d alunos \n", countTotal);
-    printf("Faltam %d vagas na van de meio dia \n", Vaga_Van12);
-    printf("Faltam %d vagas na van das 15 \n", Vaga_Van15);
-
-    }
-
-return 0;
 }
