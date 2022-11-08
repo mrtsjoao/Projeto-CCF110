@@ -3,7 +3,7 @@
 
 
 int main(){
-  int nVans[3], nVagas[3], cont = 0, nVagasVan;
+  int nVans[3], nVagas[3], cont = 0, nVagasVan =15;
   int nAlunos;
   
 
@@ -11,8 +11,7 @@ int main(){
   printf("Bem vindo usuário!\n");
   printf(" Digite a quantidade de alunos que vão embora: \n");
   scanf("%d", &nAlunos);
-  printf("Digite a quantidade de vagas por van: ");
-  scanf("%d", &nVagasVan);
+  
 
 
   //CALCULO DOS DESENHO DOS ASSENTOS DISPONIVEIS
@@ -75,14 +74,17 @@ int main(){
     scanf("%d", &IDs[I]);
     printf("\n");
 
-    int posx, posy;
+    int posx, posy, pause;
     printf("Digite o assento que ele irá ocupar: (Linha) (Coluna)\n");
     scanf("%d %d",&posy, &posx);
-    Assentos[posy][posx] = IDs[I];
     if (Assentos[posy][posx] != 0)
     {
       printf("Lugar já está ocupado!");
+      printf("O Aluno %d será substituido por %d: Confirme sua ação com (1)", Assentos[posy][posx], IDs[I]);
+      scanf("%d", &pause);
     }
+    Assentos[posy][posx] = IDs[I];
+   
     
   }
   
