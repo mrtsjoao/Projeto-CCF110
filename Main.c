@@ -1,18 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include<string.h>
 
 int main(){
   int nVans[3], nVagas[3], cont = 0, nVagasVan =15;
   int nAlunos;
   
-
   system("cls");
   printf("Bem vindo usuário!\n");
   printf(" Digite a quantidade de alunos que vão embora: \n");
   scanf("%d", &nAlunos);
-  
-
 
   //CALCULO DOS DESENHO DOS ASSENTOS DISPONIVEIS
   int LinhaAssentos, ColunaAssentos = 3;
@@ -26,7 +23,6 @@ int main(){
   int countVans[2];
   countVans[0] = 0;
   countVans[1] = 1;
-
   for(int i = 0; i< LinhaAssentos; i++)
   {
     for(int j = 0; j < ColunaAssentos; j++)
@@ -84,9 +80,21 @@ int main(){
       scanf("%d", &pause);
     }
     Assentos[posy][posx] = IDs[I];
-   
-    
   }
   
+  //LISTA DE ALUNOS COM NOMES LIGADOS A MATRICULA POR PONTEIROS
+  /*LEITURA DE NOMES:
+  
+  char nomes[5][25];
+    for (int i = 0; i < 5; i++)
+    {
+        printf("Digite o %dº nome: ", i +1);
+        scanf("%25[^\n]", nomes[i]);
+        fflush(stdin);
+    } */
+  
+  
+
+
   return 0;
 }
