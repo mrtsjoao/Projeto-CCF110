@@ -3,12 +3,21 @@
 #include<string.h>
 
 int main(){
+<<<<<<< Updated upstream
   int nVans[3], nVagas[3], cont = 0, nVagasVan =15;
   int nAlunos;
   
   system("cls");
   printf("Bem vindo usuário!\n");
   printf(" Digite a quantidade de alunos que vão embora: \n");
+=======
+  int nVagasVan =15;
+  int nAlunos;
+
+  system("cls");
+  printf("Bem vindo usuário!\n");
+  printf("Digite a quantidade de alunos que vão embora: \n");
+>>>>>>> Stashed changes
   scanf("%d", &nAlunos);
 
   //CALCULO DOS DESENHO DOS ASSENTOS DISPONIVEIS
@@ -20,7 +29,11 @@ int main(){
   }
 
   int Assentos[LinhaAssentos][ColunaAssentos];
+<<<<<<< Updated upstream
   int countVans[2];
+=======
+  int countVans[2]; // INDICE 0 == CONTADOR POR FILEIRA E INDICE 1 == CONTADOR GERAL;
+>>>>>>> Stashed changes
   countVans[0] = 0;
   countVans[1] = 1;
   for(int i = 0; i< LinhaAssentos; i++)
@@ -41,9 +54,15 @@ int main(){
   }
 
   //LEITURA DOS DADOS DOS ALUNOS
+<<<<<<< Updated upstream
   
   for(int I = 0; I < nAlunos; I++)
   { 
+=======
+  int IDs[nAlunos];
+  for(int I = 0; I < nAlunos; I++)
+  {
+>>>>>>> Stashed changes
     system("cls");
     printf("Serao necessarias ao menos %d van(s).\n", countVans[1]);
     printf("ASSENTOS DISPONIVEIS SEPARADOS POR VANS\n");
@@ -64,8 +83,11 @@ int main(){
     }
     countVans[0] = 0;
 
+<<<<<<< Updated upstream
 
     int IDs[nAlunos];
+=======
+>>>>>>> Stashed changes
     printf("Digite o ID do alunos: ");
     scanf("%d", &IDs[I]);
     printf("\n");
@@ -81,10 +103,17 @@ int main(){
     }
     Assentos[posy][posx] = IDs[I];
   }
+<<<<<<< Updated upstream
   
   //LISTA DE ALUNOS COM NOMES LIGADOS A MATRICULA POR PONTEIROS
   /*LEITURA DE NOMES:
   
+=======
+
+  //LISTA DE ALUNOS COM NOMES LIGADOS A MATRICULA POR PONTEIROS
+  /*LEITURA DE NOMES:
+
+>>>>>>> Stashed changes
   char nomes[5][25];
     for (int i = 0; i < 5; i++)
     {
@@ -92,8 +121,13 @@ int main(){
         scanf("%25[^\n]", nomes[i]);
         fflush(stdin);
     } */
+<<<<<<< Updated upstream
   
   
+=======
+
+
+>>>>>>> Stashed changes
 
 
   return 0;
