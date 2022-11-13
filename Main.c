@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include<string.h>
+#include <math.h>
 
 int main(){
   int nVagasVan =15;
@@ -11,18 +11,20 @@ int main(){
   printf("Digite a quantidade de alunos que vão embora: \n");
   scanf("%d", &nAlunos);
 
-  //CALCULO DOS DESENHO DOS ASSENTOS DISPONIVEIS
+  //CALCULO DO DESENHO DOS ASSENTOS DISPONIVEIS
   int LinhaAssentos, ColunaAssentos = 3;
-  LinhaAssentos = nAlunos / ColunaAssentos;
-  if (nAlunos % ColunaAssentos != 0)
+  if(nAlunos < nVagasVan)
   {
-    LinhaAssentos++;
+    LinhaAssentos = 5;
+  }
+  else{
+    LinhaAssentos = 5 *ceil(((float)nAlunos / (float)nVagasVan)); // CONSIDERANDO QUE EXISTEM 5 FILEIRAS P/VAN
   }
 
   int Assentos[LinhaAssentos][ColunaAssentos];
-  int countVans[2]; // INDICE 0 == CONTADOR POR FILEIRA E INDICE 1 == CONTADOR GERAL;
+  int countVans[2]; // INDICE 0 == CONTADOR POR FILEIRA E INDICE 1 == CONTADOR DE VANS;
   countVans[0] = 0;
-  countVans[1] = 1;
+  countVans[1] = 0;
   for(int i = 0; i< LinhaAssentos; i++)
   {
     for(int j = 0; j < ColunaAssentos; j++)
@@ -41,8 +43,9 @@ int main(){
   }
 
   //LEITURA DOS DADOS DOS ALUNOS
-  int IDs[nAlunos];
-  for(int I = 0; I < nAlunos; I++)
+    char nomes[nAlunos][30];
+    int IDs[nAlunos];
+for(int I = 0; I < nAlunos; I++)
   {
     system("cls");
     printf("Serao necessarias ao menos %d van(s).\n", countVans[1]);
@@ -64,6 +67,11 @@ int main(){
     }
     countVans[0] = 0;
 
+    //LISTA DE ALUNOS COM NOMES LIGADOS A MATRICULA POR PONTEIROS
+    fflush(stdin);
+    printf("Digite o %dº nome: ", I+1);
+    scanf("%25[^\n]", nomes[I]);
+    fflush(stdin);
     printf("Digite o ID do alunos: ");
     scanf("%d", &IDs[I]);
     printf("\n");
@@ -76,23 +84,28 @@ int main(){
       printf("Lugar já está ocupado!");
       printf("O Aluno %d será substituido por %d: Confirme sua ação com (1)", Assentos[posy][posx], IDs[I]);
       scanf("%d", &pause);
+      Assentos[posy][posx] = IDs[I];
+      I--;
     }
-    Assentos[posy][posx] = IDs[I];
+    else{
+        Assentos[posy][posx] = IDs[I];
+    }
   }
-
-  //LISTA DE ALUNOS COM NOMES LIGADOS A MATRICULA POR PONTEIROS
-  /*LEITURA DE NOMES:
-
-  char nomes[5][25];
-    for (int i = 0; i < 5; i++)
+for(int i = 0; i< LinhaAssentos; i++)
+{
+    printf("| ");
+    for(int j = 0; j < ColunaAssentos; j++)
     {
-        printf("Digite o %dº nome: ", i +1);
-        scanf("%25[^\n]", nomes[i]);
-        fflush(stdin);
-    } */
-
-
-
-
+        printf("%d ", Assentos[i][j]);
+        countVans[0]++;
+    }
+    printf("| \n");
+    if(countVans[0] >= nVagasVan)
+    {
+        printf("\n");
+        countVans[0] = 0;
+    }
+}
+    countVans[0] = 0;
   return 0;
 }
