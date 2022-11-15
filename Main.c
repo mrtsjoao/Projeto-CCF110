@@ -125,18 +125,20 @@ countVans[0] = 0;
   int cidade;
   for(int i = 0; i<countVans[1]; i++)
   {
-    printf("Digite qual cidade a van vai passar: \n<0> BETIM\n<1> CONTAGEM\n<2> BELO HORIZONTE\n");
+    printf("\nDigite qual cidade a van vai passar: \n<0> BETIM\n<1> CONTAGEM\n<2> BELO HORIZONTE\n");
     scanf("%d", &cidade);
-    if(cidade == 0){
-        printf("A distancia media aproximada até Betim e: %.2f KM\nO tempo medio da rota inteira e: %.2f Horas",Distancia_cidade[0], tempo[0]);
+    switch (cidade)
+        {
+        case 0:
+            printf("A distancia media aproximada até Betim e: %.2f KM\nO tempo medio da rota inteira e: %.2f Horas",Distancia_cidade[0], tempo[0]);
+        case 1:
+            printf("A distancia media aproximada até Contagem e: %.2f KM\nO tempo medio da rota inteira e: %.2f Horas",Distancia_cidade[1], tempo[1]);
+        case 2:
+            printf("A distancia media aproximada até Belo Horizonte e: %.2f KM\nO tempo medio da rota inteira e: %.2f Horas",Distancia_cidade[2], tempo[2]);
+        default:
+            printf("Cidade não encontrada!");
+        }
     }
-    if(cidade == 1){
-        printf("A distancia media aproximada até Contagem e: %.2f KM\nO tempo medio da rota inteira e: %.2f Horas",Distancia_cidade[1], tempo[1]);
-    }
-    if(cidade == 2){
-        printf("A distancia media aproximada até Belo Horizonte e: %.2f KM\nO tempo medio da rota inteira e: %.2f Horas",Distancia_cidade[2], tempo[2]);
-    }
-  }
 
   return 0;
 }
