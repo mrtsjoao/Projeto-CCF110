@@ -51,12 +51,10 @@ for(int I = 0; I < nAlunos; I++)
     system("cls");
     printf("Serao necessarias ao menos %d van(s).\n", countVans[1]);
     printf("ASSENTOS DISPONIVEIS SEPARADOS POR VANS\n");
-    
-    printf("Van nº 1 \n");
-    
+
     for(int i = 0; i< LinhaAssentos; i++)
     {
-      
+
       printf("| ");
       for(int j = 0; j < ColunaAssentos; j++)
       {
@@ -79,7 +77,6 @@ for(int I = 0; I < nAlunos; I++)
     fflush(stdin);
     printf("Digite o ID do alunos: ");
     scanf("%d", &IDs[I]);
-    printf("\n");
 
     int posx, posy, pause;
     printf("Digite o assento que ele irá ocupar: (Linha) (Coluna)\n");
@@ -96,6 +93,7 @@ for(int I = 0; I < nAlunos; I++)
         Assentos[posy][posx] = IDs[I];
     }
   }
+system("cls");
 for(int i = 0; i< LinhaAssentos; i++)
 {
     printf("| ");
@@ -111,25 +109,34 @@ for(int i = 0; i< LinhaAssentos; i++)
         countVans[0] = 0;
     }
 
-  int cidades;
-  for (int i = 0; i < countVans[1] i++)
+}
+countVans[0] = 0;
+
+  float Distancia_cidade[3], tempo[3]; // 0 -> BETIM, 1 -> CONTAGEM, 2 -> BH (BARREIRO)
+  float mediaAlunos = nAlunos/countVans[1], *pmedia; // PARA TER UMA MEDIA DE ALUNOS P/VAN
+  pmedia = &mediaAlunos;
+  Distancia_cidade[0] = 25.97 + *pmedia; //CONSIDERANDO QUE A DISTANCIA ENTRE UM ALUNO A OUTRO = 1KM
+  Distancia_cidade[1] = 15.62 + *pmedia;
+  Distancia_cidade[2] = 30.67 + *pmedia;
+  tempo[0] = Distancia_cidade[0] / 30;
+  tempo[1] = Distancia_cidade[1] / 30;
+  tempo[2] = Distancia_cidade[2] / 30;
+
+  int cidade;
+  for(int i = 0; i<countVans[1]; i++)
   {
-    printf("Digite a cidade para qual a van %d está indo:\n 1 - Betim. \n 2 - Contagem.\n 3 - Barreiro (Belo Horizonte)\n ", i + 1);
-    scanf("%d", &cidades);
-    if (cidades == 1)
-    {
-        printf("A van %d está indo para Betim.\n Distância: 35 Km \n Tempo de viagem até a cidade: 37 minutos.\n", i+1);
-    }else if (cidades == 2)
-    {
-      printf("A van %d está indo para Contagem.\n Distância: 57,4 Km \n Tempo de viagem até a cidade: 54 minutos.\n", i + 1);
-    }else if (cidades == 3)
-    {
-     printf("A van %d está indo para Barreiro (Belo Horizonte).\n Distância: 61,6 Km \n Tempo de viagem até a cidade: 1 hora e 2 minutos. \n", i+1);
+    printf("Digite qual cidade a van vai passar: \n<0> BETIM\n<1> CONTAGEM\n<2> BELO HORIZONTE\n");
+    scanf("%d", &cidade);
+    if(cidade == 0){
+        printf("A distancia media aproximada até Betim e: %.2f KM\nO tempo medio da rota inteira e: %.2f Horas",Distancia_cidade[0], tempo[0]);
+    }
+    if(cidade == 1){
+        printf("A distancia media aproximada até Contagem e: %.2f KM\nO tempo medio da rota inteira e: %.2f Horas",Distancia_cidade[1], tempo[1]);
+    }
+    if(cidade == 2){
+        printf("A distancia media aproximada até Belo Horizonte e: %.2f KM\nO tempo medio da rota inteira e: %.2f Horas",Distancia_cidade[2], tempo[2]);
     }
   }
-  
-    
-}
-    countVans[0] = 0;
+
   return 0;
 }
