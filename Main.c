@@ -3,6 +3,14 @@
 #include <math.h>
 #include <string.h>
 
+typedef struct Alunos
+{
+  int Matricula;
+  char nome[100];
+  char endereco[30];
+  char cidade[10];
+}ficha;
+
 int main(){
   int nVagasVan =15;
   int nAlunos;
@@ -11,6 +19,8 @@ int main(){
   printf("Bem vindo usuário!\n");
   printf("Digite a quantidade de alunos que vão embora: \n");
   scanf("%d", &nAlunos);
+
+  ficha DadosAlunos[nAlunos];
 
   //CALCULO DO DESENHO DOS ASSENTOS DISPONIVEIS
   int LinhaAssentos, ColunaAssentos = 3;
@@ -44,9 +54,7 @@ int main(){
   }
 
   //LEITURA DOS DADOS DOS ALUNOS
-    char nomes[nAlunos][30];
-    int IDs[nAlunos];
-for(int I = 0; I < nAlunos; I++)
+  for(int I = 0; I < nAlunos; I++)
   {
     system("cls");
     printf("Serao necessarias ao menos %d van(s).\n", countVans[1]);
@@ -73,10 +81,13 @@ for(int I = 0; I < nAlunos; I++)
     //LISTA DE ALUNOS COM NOMES LIGADOS A MATRICULA POR PONTEIROS
     fflush(stdin);
     printf("Digite o %dº nome: ", I+1);
-    scanf("%25[^\n]", nomes[I]);
+    gets(DadosAlunos[I].nome);
     fflush(stdin);
-    printf("Digite o ID do alunos: ");
-    scanf("%d", &IDs[I]);
+    printf("Digite a matricula do alunos: ");
+    scanf("%d", &DadosAlunos[I].Matricula);
+    printf("Digite o endereço do Aluno %d: ", DadosAlunos[I].Matricula);
+    fflush(stdin);
+    gets(DadosAlunos[I].endereco);
 
     int posx, posy, pause;
     printf("Digite o assento que ele irá ocupar: (Linha) (Coluna)\n");
@@ -84,18 +95,18 @@ for(int I = 0; I < nAlunos; I++)
     if (Assentos[posy][posx] != 0)
     {
       printf("Lugar já está ocupado!");
-      printf("O Aluno %d será substituido por %d: Confirme sua ação com (1)", Assentos[posy][posx], IDs[I]);
+      printf("O Aluno %d será substituido por %d: Confirme sua ação com (1)", Assentos[posy][posx], DadosAlunos[I].Matricula);
       scanf("%d", &pause);
-      Assentos[posy][posx] = IDs[I];
+      Assentos[posy][posx] = DadosAlunos[I].Matricula;
       I--;
     }
     else{
-        Assentos[posy][posx] = IDs[I];
+        Assentos[posy][posx] = DadosAlunos[I].Matricula;
     }
   }
-system("cls");
-for(int i = 0; i< LinhaAssentos; i++)
-{
+  system("cls");
+  for(int i = 0; i< LinhaAssentos; i++)
+  {
     printf("| ");
     for(int j = 0; j < ColunaAssentos; j++)
     {
@@ -108,9 +119,8 @@ for(int i = 0; i< LinhaAssentos; i++)
         printf("\n");
         countVans[0] = 0;
     }
-
-}
-countVans[0] = 0;
+  }
+  countVans[0] = 0;
 
   float Distancia_cidade[3], tempo[3]; // 0 -> BETIM, 1 -> CONTAGEM, 2 -> BH (BARREIRO)
   float mediaAlunos = nAlunos/countVans[1], *pmedia; // PARA TER UMA MEDIA DE ALUNOS P/VAN
@@ -128,17 +138,22 @@ countVans[0] = 0;
     printf("\nDigite qual cidade a van vai passar: \n<0> BETIM\n<1> CONTAGEM\n<2> BELO HORIZONTE\n");
     scanf("%d", &cidade);
     switch (cidade)
-        {
-        case 0:
-            printf("A distancia media aproximada até Betim e: %.2f KM\nO tempo medio da rota inteira e: %.2f Horas",Distancia_cidade[0], tempo[0]);
-        case 1:
-            printf("A distancia media aproximada até Contagem e: %.2f KM\nO tempo medio da rota inteira e: %.2f Horas",Distancia_cidade[1], tempo[1]);
-        case 2:
-            printf("A distancia media aproximada até Belo Horizonte e: %.2f KM\nO tempo medio da rota inteira e: %.2f Horas",Distancia_cidade[2], tempo[2]);
-        default:
-            printf("Cidade não encontrada!");
-        }
+    {
+      case 0:
+      printf("A distancia media aproximada até Betim e: %.2f KM\nO tempo medio da rota inteira e: %.2f Horas",Distancia_cidade[0], tempo[0]);
+      break;
+      case 1:
+      printf("A distancia media aproximada até Contagem e: %.2f KM\nO tempo medio da rota inteira e: %.2f Horas",Distancia_cidade[1], tempo[1]);
+      break;
+      case 2:
+      printf("A distancia media aproximada até Belo Horizonte e: %.2f KM\nO tempo medio da rota inteira e: %.2f Horas",Distancia_cidade[2], tempo[2]);
+      break;
+      default:
+      printf("Cidade não encontrada!");
+      i++;
+      
     }
+  }
 
   return 0;
 }
