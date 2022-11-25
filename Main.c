@@ -65,7 +65,7 @@ int main(){
 
     printardesenho(LinhaAssentos, ColunaAssentos, &Assentos[0][0], countVans[0]);
 
-    //LISTA DE ALUNOS COM NOMES LIGADOS A MATRICULA POR PONTEIROS
+    //LISTA DE ALUNOS COM NOMES 
     fflush(stdin);
     printf("Digite o %dº nome: ", I+1);
     gets(DadosAlunos[I].nome);
