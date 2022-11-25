@@ -3,6 +3,8 @@
 #include <math.h>
 #include <string.h>
 
+void printardesenho (int L, int C, int *M, int cont);
+
 typedef struct Alunos
 {
   int Matricula;
@@ -10,6 +12,7 @@ typedef struct Alunos
   char endereco[30];
   char cidade[10];
 }ficha;
+
 
 int main(){
   int nVagasVan =15;
@@ -60,23 +63,7 @@ int main(){
     printf("Serao necessarias ao menos %d van(s).\n", countVans[1]);
     printf("ASSENTOS DISPONIVEIS SEPARADOS POR VANS\n");
 
-    for(int i = 0; i< LinhaAssentos; i++)
-    {
-
-      printf("| ");
-      for(int j = 0; j < ColunaAssentos; j++)
-      {
-        printf("%d ", Assentos[i][j]);
-        countVans[0]++;
-      }
-      printf("| \n");
-      if(countVans[0] >= nVagasVan)
-      {
-        printf("\n");
-        countVans[0] = 0;
-      }
-    }
-    countVans[0] = 0;
+    printardesenho(LinhaAssentos, ColunaAssentos, &Assentos[0][0], countVans[0]);
 
     //LISTA DE ALUNOS COM NOMES LIGADOS A MATRICULA POR PONTEIROS
     fflush(stdin);
@@ -105,22 +92,7 @@ int main(){
     }
   }
   system("cls");
-  for(int i = 0; i< LinhaAssentos; i++)
-  {
-    printf("| ");
-    for(int j = 0; j < ColunaAssentos; j++)
-    {
-        printf("%d ", Assentos[i][j]);
-        countVans[0]++;
-    }
-    printf("| \n");
-    if(countVans[0] >= nVagasVan)
-    {
-        printf("\n");
-        countVans[0] = 0;
-    }
-  }
-  countVans[0] = 0;
+  printardesenho(LinhaAssentos, ColunaAssentos, &Assentos[0][0], countVans[0]);
 
   float Distancia_cidade[3], tempo[3]; // 0 -> BETIM, 1 -> CONTAGEM, 2 -> BH (BARREIRO)
   float mediaAlunos = nAlunos/countVans[1], *pmedia; // PARA TER UMA MEDIA DE ALUNOS P/VAN
@@ -151,9 +123,30 @@ int main(){
       default:
       printf("Cidade não encontrada!");
       i++;
-      
+
     }
   }
 
   return 0;
+}
+
+void printardesenho(int L, int C, int *M, int cont){
+
+    for(int i = 0; i< L; i++)
+    {
+        printf("|");
+        for(int j = 0; j < C; j++)
+        {
+                printf(" %d ", *M);
+                cont++;
+                M++;
+        }
+        printf("| \n");
+        if(cont >= 15)
+        {
+            printf("\n");
+            cont = 0;
+        }
+    }
+    cont = 0;
 }
