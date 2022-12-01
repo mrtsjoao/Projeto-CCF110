@@ -16,6 +16,7 @@ void RegistraAlunos(ficha *ptrficha);
 void printardesenho (int L, int C, int *M, int cont);
 int calculodesenho (int VagaVans, int qAlunos, int Linha, int Coluna, int *Assent);
 void AlocarAlunos(int *pmAssentos, ficha *Daluno);
+void CalculoDistancia(int nAlu, int Count);
 
 int main(){
     int nVagasVan =15;
@@ -33,7 +34,6 @@ int main(){
     int Assentos[LinhaAssentos][ColunaAssentos];
     int countVans[2]; // INDICE 0 == CONTADOR POR FILEIRA E INDICE 1 == CONTADOR DE VANS;
     countVans[0] = 0;
-
     countVans[1] = calculodesenho(nVagasVan, nAlunos, LinhaAssentos, ColunaAssentos, &Assentos[0][0]);
 
   //LEITURA DOS DADOS DOS ALUNOS
@@ -43,51 +43,15 @@ int main(){
     printf("Serao necessarias ao menos %d van(s).\n", countVans[1]);
     printf("ASSENTOS DISPONIVEIS SEPARADOS POR VANS\n\n");
     printardesenho(LinhaAssentos, ColunaAssentos, &Assentos[0][0], countVans[0]);
-
-    //LISTA DE ALUNOS COM NOMES
     RegistraAlunos(&DadosAlunos[I]);
-
     int posx, posy;
     printf("Digite o assento que ele irá ocupar: (Linha) (Coluna)\n");
     scanf("%d %d",&posy, &posx);
     AlocarAlunos(&Assentos[posy][posx], &DadosAlunos[I]);
-
-  system("cls");
+    system("cls");
   }
   printardesenho(LinhaAssentos, ColunaAssentos, &Assentos[0][0], countVans[0]);
-
-  float Distancia_cidade[3], tempo[3]; // 0 -> BETIM, 1 -> CONTAGEM, 2 -> BH (BARREIRO)
-  float mediaAlunos = nAlunos/countVans[1], *pmedia; // PARA TER UMA MEDIA DE ALUNOS P/VAN
-  pmedia = &mediaAlunos;
-  Distancia_cidade[0] = 25.97 + *pmedia; //CONSIDERANDO QUE A DISTANCIA ENTRE UM ALUNO A OUTRO = 1KM
-  Distancia_cidade[1] = 15.62 + *pmedia;
-  Distancia_cidade[2] = 30.67 + *pmedia;
-  tempo[0] = Distancia_cidade[0] / 30;
-  tempo[1] = Distancia_cidade[1] / 30;
-  tempo[2] = Distancia_cidade[2] / 30;
-
-  int cidade;
-  for(int i = 0; i<countVans[1]; i++)
-  {
-    printf("\nDigite qual cidade a van vai passar: \n<0> BETIM\n<1> CONTAGEM\n<2> BELO HORIZONTE\n");
-    scanf("%d", &cidade);
-    switch (cidade)
-    {
-      case 0:
-      printf("A distancia media aproximada até Betim e: %.2f KM\nO tempo medio da rota inteira e: %.2f Horas",Distancia_cidade[0], tempo[0]);
-      break;
-      case 1:
-      printf("A distancia media aproximada até Contagem e: %.2f KM\nO tempo medio da rota inteira e: %.2f Horas",Distancia_cidade[1], tempo[1]);
-      break;
-      case 2:
-      printf("A distancia media aproximada até Belo Horizonte e: %.2f KM\nO tempo medio da rota inteira e: %.2f Horas",Distancia_cidade[2], tempo[2]);
-      break;
-      default:
-      printf("Cidade não encontrada!");
-      i++;
-
-    }
-  }
+  CalculoDistancia(nAlunos, countVans[1]);
 
   return 0;
 
@@ -168,5 +132,37 @@ void AlocarAlunos(int *pmAssentos, ficha *Daluno)
     }
 
     *pmAssentos = (*Daluno).Matricula;
+}
+
+void CalculoDistancia(int nAlu, int Count){
+
+  float mediaAlunos = nAlu/Count, tempo, distancia;
+  int cidade;
+  for(int i = 0; i<Count; i++)
+  {
+    printf("\nDigite qual cidade a van(%d) vai passar: \n<0> BETIM\n<1> CONTAGEM\n<2> BELO HORIZONTE\n", (i+1));
+    scanf("%d", &cidade);
+    switch (cidade){
+        case 0:
+            distancia = 25.97 + mediaAlunos;
+            tempo = distancia / 30;
+            printf("A van %d que vai passar por BETIM terá uma rota com trajeto de %.2f KM e gastará em média %.2f Hrs", (i+1), distancia, tempo);
+            break;
+        case 1:
+            distancia = 15.62 + mediaAlunos;
+            tempo = distancia / 30;
+            printf("A van %d que vai passar por CONTAGEM terá uma rota com trajeto de %.2f KM e gastará em média %.2f Hrs", (i+1), distancia, tempo);
+            break;
+        case 2:
+            distancia = 30.67 + mediaAlunos;
+            tempo = distancia / 30;
+            printf("A van %d que vai passar por BARRERO terá uma rota com trajeto de %.2f KM e gastará em média %.2f Hrs", (i+1), distancia, tempo);
+            break;
+        default:
+            printf("CIDADE NÃO INDETIFICADA, TENTE NOVAMENTE: ");
+            i--;
+            break;
+    }
   }
+}
 
