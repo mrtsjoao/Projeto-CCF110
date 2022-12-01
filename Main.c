@@ -145,18 +145,18 @@ void CalculoDistancia(int nAlu, int Count){
     switch (cidade){
         case 0:
             distancia = 25.97 + mediaAlunos;
-            tempo = distancia / 30;
-            printf("A van %d que vai passar por BETIM terá uma rota com trajeto de %.2f KM e gastará em média %.2f Hrs", (i+1), distancia, tempo);
+            tempo = (distancia / 30) * 60;
+            printf("A van %d que vai passar por BETIM terá uma rota com trajeto de %.2f KM e gastará em média %.2f Min", (i+1), distancia, tempo);
             break;
         case 1:
             distancia = 15.62 + mediaAlunos;
-            tempo = distancia / 30;
-            printf("A van %d que vai passar por CONTAGEM terá uma rota com trajeto de %.2f KM e gastará em média %.2f Hrs", (i+1), distancia, tempo);
+            tempo = (distancia / 30) * 60;
+            printf("A van %d que vai passar por CONTAGEM terá uma rota com trajeto de %.2f KM e gastará em média %.2f Min", (i+1), distancia, tempo);
             break;
         case 2:
             distancia = 30.67 + mediaAlunos;
-            tempo = distancia / 30;
-            printf("A van %d que vai passar por BARRERO terá uma rota com trajeto de %.2f KM e gastará em média %.2f Hrs", (i+1), distancia, tempo);
+            tempo = (distancia / 30) * 60;
+            printf("A van %d que vai passar por BARRERO terá uma rota com trajeto de %.2f KM e gastará em média %.2f Min", (i+1), distancia, tempo);
             break;
         default:
             printf("CIDADE NÃO INDETIFICADA, TENTE NOVAMENTE: ");
