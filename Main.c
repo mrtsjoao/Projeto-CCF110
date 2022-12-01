@@ -3,17 +3,19 @@
 #include <math.h>
 #include <string.h>
 
-void printardesenho (int L, int C, int *M, int cont);
-int calculodesenho (int VagaVans, int qAlunos, int Linha, int Coluna, int *Assent);
 
 typedef struct Alunos
 {
   int Matricula;
-  char nome[100];
+  char nome[30];
   char endereco[30];
-  char cidade[10];
+  char cidade[30];
 }ficha;
 
+void RegistraAlunos(ficha *ptrficha);
+void printardesenho (int L, int C, int *M, int cont);
+int calculodesenho (int VagaVans, int qAlunos, int Linha, int Coluna, int *Assent);
+void AlocarAlunos(int *pmAssentos, ficha *Daluno);
 
 int main(){
     int nVagasVan =15;
@@ -21,7 +23,7 @@ int main(){
 
     system("cls");
     printf("Bem vindo usuário!\n");
-    printf("Digite a quantidade de alunos que vão embora: \n");
+    printf("\nDigite a quantidade de alunos que vão embora: \n");
     scanf("%d", &nAlunos);
 
     ficha DadosAlunos[nAlunos];
@@ -43,32 +45,15 @@ int main(){
     printardesenho(LinhaAssentos, ColunaAssentos, &Assentos[0][0], countVans[0]);
 
     //LISTA DE ALUNOS COM NOMES
-    fflush(stdin);
-    printf("Digite o %dº nome: ", I+1);
-    gets(DadosAlunos[I].nome);
-    fflush(stdin);
-    printf("Digite a matricula do alunos: ");
-    scanf("%d", &DadosAlunos[I].Matricula);
-    printf("Digite o endereço do Aluno %d: ", DadosAlunos[I].Matricula);
-    fflush(stdin);
-    gets(DadosAlunos[I].endereco);
+    RegistraAlunos(&DadosAlunos[I]);
 
-    int posx, posy, pause;
+    int posx, posy;
     printf("Digite o assento que ele irá ocupar: (Linha) (Coluna)\n");
     scanf("%d %d",&posy, &posx);
-    if (Assentos[posy][posx] != 0)
-    {
-      printf("Lugar já está ocupado!");
-      printf("O Aluno %d será substituido por %d: Confirme sua ação com (1)", Assentos[posy][posx], DadosAlunos[I].Matricula);
-      scanf("%d", &pause);
-      Assentos[posy][posx] = DadosAlunos[I].Matricula;
-      I--;
-    }
-    else{
-        Assentos[posy][posx] = DadosAlunos[I].Matricula;
-    }
-  }
+    AlocarAlunos(&Assentos[posy][posx], &DadosAlunos[I]);
+
   system("cls");
+  }
   printardesenho(LinhaAssentos, ColunaAssentos, &Assentos[0][0], countVans[0]);
 
   float Distancia_cidade[3], tempo[3]; // 0 -> BETIM, 1 -> CONTAGEM, 2 -> BH (BARREIRO)
@@ -105,6 +90,7 @@ int main(){
   }
 
   return 0;
+
 }
 
 void printardesenho(int L, int C, int *M, int cont){
@@ -155,3 +141,32 @@ int calculodesenho(int VagaVans, int qAlunos, int Linha, int Coluna, int *Assent
         cont2--;
     return cont2;
 }
+
+void RegistraAlunos(ficha *ptrficha){
+  static int n = 0;
+  ficha Dados;
+  fflush(stdin);
+  printf("Digite o %dº nome: ", n +1);
+  gets(Dados.nome);
+  fflush(stdin);
+  printf("A sua matricula: ");
+  scanf("%d", &Dados.Matricula);
+  printf("Endereço do Aluno %d: ", Dados.Matricula);
+  fflush(stdin);
+  gets(Dados.endereco);
+  *ptrficha = Dados;
+  n++;
+}
+void AlocarAlunos(int *pmAssentos, ficha *Daluno)
+{
+    int pause;
+    if (*pmAssentos != 0)
+    {
+      printf("Lugar já está ocupado!");
+      printf("O Aluno %d será substituido por %d: Confirme sua ação com (1)", *pmAssentos, (*Daluno).Matricula);
+      scanf("%d", &pause);
+    }
+
+    *pmAssentos = (*Daluno).Matricula;
+  }
+
