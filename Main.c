@@ -2,33 +2,19 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
-
-
-typedef struct Alunos
-{
-  int Matricula;
-  char nome[30];
-  char endereco[30];
-  char cidade[30];
-}ficha;
-
-void RegistraAlunos(ficha *ptrficha);
-void printardesenho (int L, int C, int *M, int cont);
-int calculodesenho (int VagaVans, int qAlunos, int Linha, int Coluna, int *Assent);
-void AlocarAlunos(int *pmAssentos, ficha *Daluno);
-void CalculoDistancia(int nAlu, int Count);
+#include <locale.h>
+#include "RotaCab.h"
 
 int main(){
-    int nVagasVan =15;
-    int nAlunos;
+    setlocale(LC_ALL, "Portuguese");
+    int nVagasVan = 15;
+    int nAlunos, funcao;
 
-    system("cls");
-    printf("Bem vindo usuário!\n");
-    printf("\nDigite a quantidade de alunos que vão embora: \n");
+    printf("Digite a quantidade de alunos que vão embora: \n");
     scanf("%d", &nAlunos);
-
+    //DECLARANDO A QUANTIDADE DE FICHAS DE ALUNOS
     ficha DadosAlunos[nAlunos];
-
+    //MONTANDO A MATRIZ DE ASSENTOS DA VAN
     int LinhaAssentos, ColunaAssentos = 3;
     LinhaAssentos = 5 *ceil(((float)nAlunos / (float)nVagasVan)); // CONSIDERANDO QUE EXISTEM 5 FILEIRAS P/VAN
     int Assentos[LinhaAssentos][ColunaAssentos];
@@ -36,22 +22,94 @@ int main(){
     countVans[0] = 0;
     countVans[1] = calculodesenho(nVagasVan, nAlunos, LinhaAssentos, ColunaAssentos, &Assentos[0][0]);
 
-  //LEITURA DOS DADOS DOS ALUNOS
-  for(int I = 0; I < nAlunos; I++)
-  {
-    system("cls");
-    printf("Serao necessarias ao menos %d van(s).\n", countVans[1]);
-    printf("ASSENTOS DISPONIVEIS SEPARADOS POR VANS\n\n");
-    printardesenho(LinhaAssentos, ColunaAssentos, &Assentos[0][0], countVans[0]);
-    RegistraAlunos(&DadosAlunos[I]);
-    int posx, posy;
-    printf("Digite o assento que ele irá ocupar: (Linha) (Coluna)\n");
-    scanf("%d %d",&posy, &posx);
-    AlocarAlunos(&Assentos[posy][posx], &DadosAlunos[I]);
-    system("cls");
-  }
-  printardesenho(LinhaAssentos, ColunaAssentos, &Assentos[0][0], countVans[0]);
-  CalculoDistancia(nAlunos, countVans[1]);
+    //LEITURA DOS DADOS DOS ALUNOS E ALOCAÇÃO
+    for(int I = 0; I < nAlunos; I++)
+    {
+        system("cls");
+        printf("Serão necessarias ao menos %d van(s).\n", countVans[1]);
+        printf("ASSENTOS DISPONIVEIS SEPARADOS POR VANS\n\n");
+        printardesenho(LinhaAssentos, ColunaAssentos, &Assentos[0][0], countVans[0]);
+        RegistraAlunos(&DadosAlunos[I]);
+        int posx, posy;
+        printf("Digite o assento que ele irá ocupar: (Linha) (Coluna)\n");
+        scanf("%d %d",&posy, &posx);
+        AlocarAlunos(&Assentos[posy][posx], &DadosAlunos[I]);
+        system("cls");
+    }
+    int ordementrega[nAlunos];
+    FILE *Fordem;
+
+    int FLAG_STOP = 0;
+    while (FLAG_STOP == 0){
+
+
+        printf("\n\n ROTA CRIADA \n\n");
+        printf("<1> DEFINIR O DESTINO \n");
+        printf("<2> DEFINIR A ORDEM DE ENTREGA \n");
+        printf("<3> MOSTRAR ASSENTOS DA VAN \n");
+        printf("<4> SALVAR A ORDEM DE ENTREGA \n");
+        printf("<5> MOSTRAR FICHA ALUNO \n");
+        printf("<6> SAIR \n ");
+
+        scanf("%d", &funcao);
+        switch(funcao){
+            case 1:
+                system("cls");
+                printf("\n\n");
+                CalculoDistancia(nAlunos, countVans[1]);
+                break;
+
+            case 2:
+                system("cls");
+                for(int i = 0; i<nAlunos; i++){
+                    printf("%d- %s\n", (i+1), DadosAlunos[i].nome);
+                }
+                printf("Digite a ordem de entrega: ");
+                for(int i = 0; i<nAlunos; i++){
+                    scanf("%d", &ordementrega[i]);
+                }
+                system("cls");
+                break;
+            case 3:
+                system("cls");
+                printardesenho(LinhaAssentos, ColunaAssentos, &Assentos[0][0], countVans[0]);
+                break;
+            case 4:
+                system("cls");
+                if((Fordem = fopen("ordementrega.txt", "w+"))== NULL){
+                    printf("\nErro ao abrir o arquivo\n");
+                }
+                else{
+                    for(int i = 0; i<nAlunos; i++){
+                        fprintf(Fordem, "%d- %s\n", (i+1), DadosAlunos[(ordementrega[i])-1].nome);
+                    }
+                    printf("Arquivo Criado!");
+                }
+                break;
+            case 5:
+                system("cls");
+                for(int i = 0; i<nAlunos; i++){
+                    printf("%d- %s\n", DadosAlunos[i].Matricula, DadosAlunos[i].nome);
+                }
+                printf("\n\nDigite a matrícula do aluno: ");
+                int buscamatricula;
+                scanf("%d", &buscamatricula);
+                for(int i = 0; i<nAlunos; i++){
+                    if(buscamatricula == DadosAlunos[i].Matricula){
+                        printf("\n\nNome: %s\n", DadosAlunos[i].nome);
+                        printf("Matrícula: %d\n", DadosAlunos[i].Matricula);
+                        printf("Endereço: %s\n", DadosAlunos[i].endereco);
+                        printf("Cidade: %s\n", DadosAlunos[i].cidade);
+                    }
+                }
+                break;
+            case 6:
+                FLAG_STOP++;
+                break;
+            default:
+                printf("\nDIGITE UMA FUNÇÃO QUE EXISTA\n");
+        }
+    }
 
   return 0;
 
@@ -113,9 +171,12 @@ void RegistraAlunos(ficha *ptrficha){
   printf("Digite o %dº nome: ", n +1);
   gets(Dados.nome);
   fflush(stdin);
-  printf("A sua matricula: ");
+  printf("Digite a matricula do aluno: ");
   scanf("%d", &Dados.Matricula);
-  printf("Endereço do Aluno %d: ", Dados.Matricula);
+  printf("Digite a cidade do Aluno %d: ", Dados.Matricula);
+  fflush(stdin);
+  gets(Dados.cidade);
+  printf("Digite o Endereço do Aluno %d: ", Dados.Matricula);
   fflush(stdin);
   gets(Dados.endereco);
   *ptrficha = Dados;
@@ -165,4 +226,3 @@ void CalculoDistancia(int nAlu, int Count){
     }
   }
 }
-
