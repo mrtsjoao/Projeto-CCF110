@@ -102,7 +102,6 @@ int main(){
                 break;
             case 5:
                 system("cls");
-
                 printf("TODOS OS ALUNOS REGISTRADOS\n\n");
                 for(int i = 0; i<nAlunos; i++){
                     printf("%d- %s\n", DadosAlunos[i].Matricula, DadosAlunos[i].nome);
