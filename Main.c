@@ -10,6 +10,8 @@ int main(){
     int nVagasVan = 15;
     int nAlunos, funcao;
 
+    printf("\nMONTANDO A ROTA\n\n");
+
     printf("Digite a quantidade de alunos que vão embora: \n");
     scanf("%d", &nAlunos);
     //DECLARANDO A QUANTIDADE DE FICHAS DE ALUNOS
@@ -26,8 +28,12 @@ int main(){
     for(int I = 0; I < nAlunos; I++)
     {
         system("cls");
+
+        printf("\nLEITURA DE DADOS DOS ALUNOS E ALOCAÇÃO NA VAN: \n\n");
+
         printf("Serão necessarias ao menos %d van(s).\n", countVans[1]);
-        printf("ASSENTOS DISPONIVEIS SEPARADOS POR VANS\n\n");
+        printf("Assentos da van abaixo: \n\n");
+
         printardesenho(LinhaAssentos, ColunaAssentos, &Assentos[0][0], countVans[0]);
         RegistraAlunos(&DadosAlunos[I]);
         int posx, posy;
@@ -35,6 +41,7 @@ int main(){
         scanf("%d %d",&posy, &posx);
         AlocarAlunos(&Assentos[posy][posx], &DadosAlunos[I]);
         system("cls");
+
     }
     int ordementrega[nAlunos];
     FILE *Fordem;
@@ -44,11 +51,12 @@ int main(){
 
 
         printf("\n\n ROTA CRIADA \n\n");
-        printf("<1> DEFINIR O DESTINO \n");
-        printf("<2> DEFINIR A ORDEM DE ENTREGA \n");
-        printf("<3> MOSTRAR ASSENTOS DA VAN \n");
-        printf("<4> SALVAR A ORDEM DE ENTREGA \n");
-        printf("<5> MOSTRAR FICHA ALUNO \n");
+
+        printf("<1> DEFINIR O DESTINO DA ROTA\n");
+        printf("<2> DEFINIR A ORDEM DE ENTREGA DOS ALUNOS\n");
+        printf("<3> MOSTRAR ASSENTOS ORGANIZADOS DA VAN \n");
+        printf("<4> SALVAR A ORDEM DE ENTREGA EM UM ARQUIVO\n");
+        printf("<5> MOSTRAR A FICHA COMPLETA DE UM ALUNO \n");
         printf("<6> SAIR \n ");
 
         scanf("%d", &funcao);
@@ -61,10 +69,13 @@ int main(){
 
             case 2:
                 system("cls");
+
+                printf("DEFININDO A ORDEM DE ENTREGA \n\n");
+
                 for(int i = 0; i<nAlunos; i++){
                     printf("%d- %s\n", (i+1), DadosAlunos[i].nome);
                 }
-                printf("Digite a ordem de entrega: ");
+                printf("\nDigite a ordem de entrega: \n");
                 for(int i = 0; i<nAlunos; i++){
                     scanf("%d", &ordementrega[i]);
                 }
@@ -72,6 +83,9 @@ int main(){
                 break;
             case 3:
                 system("cls");
+
+                printf("DESENHO DA VAN: \n\n");
+
                 printardesenho(LinhaAssentos, ColunaAssentos, &Assentos[0][0], countVans[0]);
                 break;
             case 4:
@@ -83,11 +97,13 @@ int main(){
                     for(int i = 0; i<nAlunos; i++){
                         fprintf(Fordem, "%d- %s\n", (i+1), DadosAlunos[(ordementrega[i])-1].nome);
                     }
-                    printf("Arquivo Criado!");
+                    printf("\nArquivo Criado!\n");
                 }
                 break;
             case 5:
                 system("cls");
+
+                printf("TODOS OS ALUNOS REGISTRADOS\n\n");
                 for(int i = 0; i<nAlunos; i++){
                     printf("%d- %s\n", DadosAlunos[i].Matricula, DadosAlunos[i].nome);
                 }
@@ -104,6 +120,7 @@ int main(){
                 }
                 break;
             case 6:
+                printf("\n\nBOA VIAGEM!\n\n");
                 FLAG_STOP++;
                 break;
             default:
@@ -207,17 +224,17 @@ void CalculoDistancia(int nAlu, int Count){
         case 0:
             distancia = 25.97 + mediaAlunos;
             tempo = (distancia / 30) * 60;
-            printf("A van %d que vai passar por BETIM terá uma rota com trajeto de %.2f KM e gastará em média %.2f Min", (i+1), distancia, tempo);
+            printf("A van %d vai passar por BETIM e terá uma rota com: \nDistância percorrida de %.2f KM \nTempo até o ultimo destino de %.2f Min\n", (i+1), distancia, tempo);
             break;
         case 1:
             distancia = 15.62 + mediaAlunos;
             tempo = (distancia / 30) * 60;
-            printf("A van %d que vai passar por CONTAGEM terá uma rota com trajeto de %.2f KM e gastará em média %.2f Min", (i+1), distancia, tempo);
+            printf("A van %d vai passar por CONTAGEM e terá uma rota com: \nDistância percorrida de %.2f KM \nTempo até o ultimo destino de %.2f Min\n", (i+1), distancia, tempo);
             break;
         case 2:
             distancia = 30.67 + mediaAlunos;
             tempo = (distancia / 30) * 60;
-            printf("A van %d que vai passar por BARRERO terá uma rota com trajeto de %.2f KM e gastará em média %.2f Min", (i+1), distancia, tempo);
+            printf("A van %d vai passar por BARRERO e terá uma rota com: \nDistância percorrida de %.2f KM \nTempo até o ultimo destino de %.2f Min\n", (i+1), distancia, tempo);
             break;
         default:
             printf("CIDADE NÃO INDETIFICADA, TENTE NOVAMENTE: ");
